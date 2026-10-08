@@ -80,6 +80,28 @@ def sources(b):
 def review_status(b):
     return '<div class="metrics">'+''.join(f'<div><span>{k}</span><strong>待实测</strong></div>' for k in ['下载吞吐','高峰可用率','延迟与波动','丢包与恢复','平台可用性','设备兼容性'])+'</div><p class="muted">没有可复核样本，暂不发布分数、星级或性能排名。</p>'
 
+def worked_example(cat,b,index):
+    if b['id'] in ['firefly','jilian','kosing']:b=brands[index%4]
+    p=monthly(b)
+    base=f'以{b["name"]}的历史资料为例，{p["name"]}记录为{money(p["price"])}元月付、{p["gb"]}GB月额度，来源日期为{p.get("sourceDate","未注明")}。' if p else ''
+    if cat=='预算选择':
+        usage=max(1,round(p['gb']*.4))
+        detail=f'假设一个月实际使用{usage}GB，按实用量分摊的费用约为{p["price"]/usage:.3f}元/GB；按全部标称容量计算则约为{p["price"]/p["gb"]:.3f}元/GB。前者帮助复盘支出，后者描述容量标价，二者不能混用。示例没有计入优惠、倍率或其他费用。'
+    elif cat=='流量知识':
+        usage=round(p['gb']*.6)
+        detail=f'若一个统计窗口内显示已用{usage}GB，只有确认后台单位、统计周期与节点倍率一致后，才能将它与{p["gb"]}GB额度比较。这里的用量是演算假设，没有读取任何读者账户，也不代表该服务实际扣费记录。'
+    elif cat=='稳定性':detail='这份套餐记录说明了费用和容量，没有证明高峰表现。真正的观察表还需要记录你所在地区、运营商、常用节点与连续任务结果。即使某次任务完成，也要保留之后的失败和恢复记录，才能判断结论是否适用于持续使用。'
+    elif cat=='测评方法':detail='测试时应写出实际购买的套餐版本，不以目录中的参考档位替代账号权益。选择固定目标和时间窗口，保存原始样本，再计算典型水平与异常范围。没有购买记录或任务日志时，报告只能停留在资料分析层面。'
+    elif cat=='线路知识':detail=f'原记录的线路描述为“{b["line"]}”。这属于资料标签，不是本站对路由、出口或容量做出的测量结果。若要进一步比较，先确定具体节点，再核对实际任务与出口信息，不能从宣传名称推导所有地区表现。'
+    elif cat=='客户端':detail='品牌档案提供的官网入口不含你的私人配置。实际导入前需要从已确认后台取得个人订阅，并核对格式和客户端版本。本文没有该品牌所有系统的兼容性样本，不能把目录收录误读为支持全部设备。'
+    elif cat=='故障排查':detail='如果账号面板显示额度仍有剩余，而客户端无法完成任务，应分别核对配置更新时间、实际节点连接与目标应用。套餐余额只是其中一项信息；它既不能证明线路正常，也不意味着必须再次购买套餐。'
+    elif cat=='安全隐私':detail='这份公开档案只保存推广入口与历史套餐，不保存个人订阅或支付凭据。排查同类问题时，可以引用套餐名称与日期，但个人令牌、账号密码和付款验证码应从公开材料中移除。'
+    elif cat=='优惠活动':
+        detail=(f'站主提供的代码为“{b["coupon"]}”，当前未完成结算验证。输入代码后，需要同时检查原订单金额、折扣项目与最终实付；不能从代码名称推断折扣百分比。' if b.get('coupon') else '站主没有为该品牌提供优惠码，因此资料表保持空缺。其他品牌的活动不能用于推算它的折后价格，也不能把没有代码解释为完全没有促销。')
+    elif cat=='使用场景':detail='将这个参考档位放回自己的任务清单：需要哪些地区、每月预计使用多少、是否包含上传、能否接受任务中断。容量满足只是一个筛选条件，会议、文件传输或移动网络体验仍需要在实际环境验证。'
+    else:detail='比较时把这组金额、容量和资料日期放在同一行，避免从另一个来源挑选更低价格或更大额度拼接。未确认的设备限制、倍率与当前在售状态继续保持未知；只有对应字段一致，计算结果才有可解释的基础。'
+    return '<h2>用一份品牌资料练习核对</h2><p>'+E(base+detail)+f'</p><p class="source-reference"><a href="/brands/{b["id"]}/">查看{E(b["name"])}完整档案与来源</a>。以上是参考资料与明确假设的分析，未形成当前订单或性能验证。</p>'
+
 # The first usable slice is the homepage, with the final visual direction and core links.
 hero=f'''<section class="hero"><div class="hero-copy"><p class="eyebrow"><span class="tiny-line"></span> 连接之前，先读懂选择</p><h1>梯子推荐，<br>从<span>严选</span>开始。</h1><p>机场推荐、套餐分析与使用指南。<br>看清价格与流量，也看清每一个结论的依据。</p><div class="hero-actions">{button('查看机场推荐','/topics/recommended/')}{button('浏览品牌库','/brands/',True)}</div><div class="hero-stats"><div><strong>29</strong><span>品牌档案</span></div><div><strong>150</strong><span>博客文章</span></div><div><strong>3</strong><span>严选专题</span></div></div></div><aside class="hero-picks"><div class="picks-header"><span>站主推荐 · TOP 10</span><a href="/topics/recommended/">完整榜单</a></div>'''+''.join(f'<a class="pick-row" href="/brands/{b["id"]}/"><span>{b["order"]:02}</span><div><strong>{E(b["name"])}</strong><small>{E(b["profile"]["headline"])}</small></div><span class="pick-label">品牌详情</span></a>' for b in brands[:3])+'''<div class="picks-note">推荐顺序由站主指定，性能结论见测评记录。</div></aside></section>'''
 topic_cards='''<div class="topic-grid"><a class="topic-card" href="/topics/recommended/"><span class="topic-no">01 / EDITOR’S ORDER</span><h3>机场推荐排行 1–10</h3><p>按站主指定顺序，了解十个推荐品牌。</p><span>浏览推荐榜</span></a><a class="topic-card" href="/topics/budget/"><span class="topic-no">02 / BUDGET SELECTION</span><h3>便宜机场严选 1–10</h3><p>以历史月付参考价比较，注明容量与条件。</p><span>查看低价参考榜</span></a><a class="topic-card" href="/topics/stable/"><span class="topic-no">03 / STABILITY RESEARCH</span><h3>稳定机场严选 1–10</h3><p>十个待测候选，按统一方法验证持续体验。</p><span>查看候选与标准</span></a></div>'''
@@ -129,6 +151,7 @@ def build_remaining():
         related=brands[(i-1)%len(brands)]
         body=head(title,p1,'FIELD GUIDE / 使用与选购指南',f'<a href="/articles/">博客文章</a> / {E(cat)}')
         body+=f'<div class="article-layout"><article class="prose"><p class="byline">翻墙梯子编辑部 · {DATE} · {E(cat)}</p><h2 id="question">先把问题界定清楚</h2><p>{E(p1)}</p><h2 id="compare">比较或验证的第一步</h2><p>{E(p2)}</p><h2 id="action">把结论放回真实需求</h2><p>{E(p3)}</p><h2 id="record">保留一份可复核的{E(record_name)}</h2><p>建议记录：{E(fields)}。把事实、计算和推测分开；缺少依据的字段标记为待核实，不因为需要填写比较表就补上一个看似合理的数值。涉及账户的记录先脱敏，再决定是否可以公开。</p><div class="takeaway"><strong>阅读要点</strong><p>{E(principle)}</p></div><h2 id="checklist">实际使用时的核对顺序</h2><ol><li>明确当前问题涉及的任务、套餐或配置，确认对应版本与日期。</li><li>按上述方法收集一组有上下文的记录，同时保留未成功的情况。</li><li>核对费用、额度及具体任务的结果；没有证据的结论继续保持未知。</li></ol><h2>常见追问：能直接据此判断某个品牌好吗？</h2><p>这是一篇方法指南，没有对某个品牌做性能背书。价格与套餐资料可以在品牌档案中核对，当前售价需要查看购买页；速度与稳定性则需要同条件实测。推荐顺序、优惠码和线路名称，都不能代替实际观察。</p><p><a href="/topics/{cat_slugs[cat]}/">继续阅读{E(cat)}专题</a> · <a href="/brands/">核对品牌套餐</a> · <a href="/methodology/">查看测评记录标准</a></p>'
+        body=body.replace('<h2>常见追问：能直接据此判断某个品牌好吗？</h2>',worked_example(cat,related,i)+'<h2>常见追问：能直接据此判断某个品牌好吗？</h2>')
         if 'sing-box' in title:
             body+='<p class="source-reference">技术依据：<a href="https://sing-box.sagernet.org/configuration/" target="_blank" rel="noopener">sing-box 官方配置文档</a>，具体字段需按使用版本核对。</p>'
         elif 'Mihomo' in title or '客户端关闭' in title:
