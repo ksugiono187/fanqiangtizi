@@ -10,5 +10,9 @@
   "status": "deployed",
   "customDomain": "fanqiangtizi.wiki",
   "customDomainStatus": "activated_and_https_homepage_verified",
-  "deploymentId": "abe8a1e7-6274-4e3d-a783-d9de31cc1e7c"
+  "deploymentId": "c5362d1b-ee3e-4331-b7b4-8445f23ed203",
+  "verifiedSourceCommit": "d46d33ad50743b359cb28dbe08d9e02a61d4632a",
+  "githubAppRepositoryAuthorized": true,
+  "fireflyMonthlyReferencePrice": 8,
+  "fireflyLivePriceVerified": true
 }
