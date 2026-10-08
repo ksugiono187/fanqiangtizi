@@ -57,6 +57,8 @@ def money(x):return f'{x:g}' if isinstance(x,(int,float)) else str(x)
 def brand_card(b,compact=False):
     p=monthly(b)
     price=f'<strong>¥{money(p["price"])}<small> / 月付参考</small></strong><span>{p["gb"]} GB / 月</span>' if p and b['id'] not in ['firefly','jilian','kosing'] else '<strong>待复核<small> / 套餐资料</small></strong>'
+    if b.get('referenceMonthlyPrice') is not None:
+        price=f'<strong>¥{money(b["referenceMonthlyPrice"])}<small> / 月付参考</small></strong>'
     return f'''<article class="brand-card" data-search="{E(b['name'])}"><div class="brand-top"><span class="rank">{b['order']:02}</span><span class="badge">{'优惠码' if b.get('coupon') else '品牌档案'}</span></div><h3><a href="/brands/{b['id']}/">{E(b['name'])}</a></h3><p>{E(b['profile']['headline'])}</p><div class="brand-price">{price}</div><div class="brand-bottom"><span>{E(b['status'])}</span><a href="/brands/{b['id']}/">查看详情</a></div></article>'''
 def plans_table(b):
     rows=[]
@@ -118,6 +120,8 @@ def build_remaining():
         body=head(b['name']+'：套餐、优惠码与测评档案',desc,'BRAND ARCHIVE / 品牌档案',f'<a href="/brands/">品牌库</a> / {E(b["name"])}')
         body+=f'<div class="brand-overview"><div><span class="badge">目录顺序 {b["order"]:02}</span><h2>{E(profile["headline"])}</h2><p>{E(b["audience"])}</p></div><div>{outbound(b)}</div></div>'+note(f'{E(b["status"])}。官网入口由站主提供，含推广参数；参考套餐尚未完成当前订单验证。')
         body+=section_title('PLANS / 套餐','价格、流量与付款周期')+plans_table(b)
+        if b.get('referenceMonthlyPrice') is not None:
+            body=body.replace(section_title('PLANS / 套餐','价格、流量与付款周期'),section_title('PLANS / 套餐','价格、流量与付款周期')+f'<div class="panel"><h2>¥{money(b["referenceMonthlyPrice"])} / 月付参考</h2><p>{E(b["referencePriceSource"])} · {E(b["referencePriceDate"])}。对应流量与套餐权益待补充；下表保留旧资料日期的历史套餐。</p></div>')
         body+='<details class="panel"><summary>线路与原资料宣传：尚未实测验证</summary><p>原记录线路描述：'+E(b['line'])+'。以下是资料来源的描述，不是本站实测结论。</p>'+''.join('<h3>'+E(p['name'])+'</h3><ul>'+''.join('<li>'+E(f)+'</li>' for f in p['features'])+'</ul>' for p in b['plans'] if p.get('features'))+'</details>'
         body+='<div class="two-col"><section class="panel"><h2>月付档位解读</h2><p>'+E(profile['monthlyInsight'])+'</p></section><section class="panel"><h2>周期与按量的区别</h2><p>'+E(profile['cycleInsight'])+'</p></section></div>'
         body+='<section class="panel"><h2>需要认真权衡的条件</h2><p>'+E(profile['tradeoff'])+'</p><p>'+E(profile['verifyInsight'])+'</p></section>'+section_title('COUPON / 优惠','优惠码与使用条件')+coupon_block(b)

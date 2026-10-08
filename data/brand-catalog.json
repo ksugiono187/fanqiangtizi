@@ -487,6 +487,9 @@
     "name": "Firefly机场",
     "url": "https://vip02.fireflyaff.com/#/?code=Fes6j9rn",
     "coupon": "firefly",
+    "referenceMonthlyPrice": 8,
+    "referencePriceDate": "2026-10-08",
+    "referencePriceSource": "站主提供",
     "plans": [
       {
         "name": "Firefly年付版",
