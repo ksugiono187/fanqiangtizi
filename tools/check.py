@@ -44,7 +44,16 @@ assert len(locs)==len(pages) and len(locs)==len(set(locs))
 ET.parse(DIST/'feed.xml')
 for name in ['recommended','budget','stable']:
     content=(DIST/'topics'/name/'index.html').read_text(encoding='utf-8')
-    assert content.count('class="rank-row"')==10
+    assert content.count('class="ranking-dossier"')==10
+cases=[line.split('\t') for line in (ROOT/'data/guide-cases.tsv').read_text(encoding='utf-8').splitlines()]
+assert len(cases)==121 and len({row[1] for row in cases})==121
+for i in range(1,122):
+    content=(DIST/'articles'/f'guide-{i:03}'/'index.html').read_text(encoding='utf-8')
+    assert 'class="worked-case"' in content and 'id="worksheet"' in content
+for b in brands:
+    content=(DIST/'brands'/b['id']/'index.html').read_text(encoding='utf-8')
+    assert all(f'id="{key}"' in content for key in ['summary','plans','economics','scenarios','network','coupon','faq','sources'])
+assert '¥8 / 月付参考' in (DIST/'brands'/'firefly'/'index.html').read_text(encoding='utf-8')
 pending=json.loads((ROOT/'data/reviews.json').read_text(encoding='utf-8'))
 assert len(pending)==29 and all(r['throughputMbps'] is None for r in pending)
 report={'status':'pass' if not errors else 'fail','pages':len(pages),'articles':150,'brands':29,'coupons':11,'sitemapUrls':len(locs),'errors':errors,'checks':['全部内部链接与锚点','标题与描述唯一','逐页TDK与canonical','JSON-LD有效','XML sitemap与RSS有效','品牌顺序与原始入口一致','三榜各10个条目','实测缺失值保留为空']}
