@@ -5,3 +5,27 @@
 @media(max-width:760px){.shell{width:calc(100% - 36px)}.header-inner{min-height:76px;gap:12px;flex-wrap:wrap;position:relative}.logo{font-size:1.1rem}.logo small{font-size:.65rem}.logo-mark{width:36px;height:36px}.menu-toggle{display:block;margin-left:auto;font-size:.8rem}.motion-toggle{padding:7px;font-size:.75rem}.header-inner nav{display:none;width:100%;margin:0;padding:12px 0 20px;justify-content:space-between;gap:10px;flex-wrap:wrap}.header-inner nav.open{display:flex}.header-inner nav a{font-size:.85rem}.hero{grid-template-columns:1fr;padding:45px 0 25px;gap:35px}.hero h1{font-size:3rem}.hero-copy>p:not(.eyebrow){font-size:1rem}.hero-stats{gap:35px;margin-top:30px}.hero-picks{padding:22px}.topic-grid,.brand-grid,.article-grid,.collection-grid,.review-grid{grid-template-columns:1fr}.topic-card{min-height:215px}.topic-no{margin-bottom:20px}.section-head{align-items:start;margin-top:35px}.section-head h2{font-size:1.35rem}.section-head .text-link{font-size:.75rem;white-space:nowrap}.brand-card>p{min-height:0}.brand-price{margin:18px 0}.page-head{padding-top:30px}.page-head h1{font-size:2rem;overflow-wrap:anywhere}.lead{font-size:1rem}.two-col{grid-template-columns:1fr;gap:0}.panel{padding:22px}.brand-overview{display:block;padding:22px}.brand-overview .button{margin-top:20px}.coupon{padding:20px;flex-wrap:wrap}.metrics{grid-template-columns:repeat(2,1fr)}.metrics>div{padding:20px}.rank-row{gap:15px;padding:20px;flex-wrap:wrap;align-items:start}.rank-row>div{flex:1;min-width:0}.rank-row .button{margin-left:63px}.rank-number{font-size:1.65rem}.rank-row h2{font-size:1.1rem}.article-layout{grid-template-columns:1fr}.article-aside{display:none}.article-list-item{gap:15px;align-items:start}.article-list-item>span{width:60px;font-size:.75rem}.article-list-item>small{display:none}.article-list-item p{font-size:.85rem}.article-list-item h2{font-size:1rem}.source-box{padding:20px}.sitemap-list{columns:1}.footer-bottom{flex-direction:column;gap:10px}.footer-top{gap:20px}.footer-top>div{gap:16px}.prose{line-height:2}.prose h2{font-size:1.3rem}.hero-actions{flex-wrap:wrap}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.ambient *{animation:none!important}.brand-card,.topic-card,#toast{transition:none}}
 @media print{header,.ambient,.article-aside,.motion-toggle,footer{display:none}body{background:#fff;color:#111}p,.prose p{color:#222}.shell{width:100%}.article-layout{display:block}}
+/* Blue-violet light currents, luminous horizon and drifting particle layer. */
+body{background:#070a1c;isolation:isolate}
+.ambient{background:radial-gradient(ellipse at 75% 15%,#21144888,transparent 58%),radial-gradient(ellipse at 10% 65%,#0b285080,transparent 65%),#070a1c}
+.aurora{filter:blur(48px);opacity:.85}
+.a1{width:110vw;height:55vh;top:-12vh;right:-28vw;background:radial-gradient(ellipse,#3158dd99 0%,#1b43a74d 36%,transparent 70%);animation:tech-blue 12s ease-in-out infinite alternate}
+.a2{width:95vw;height:80vh;left:-35vw;top:30vh;background:radial-gradient(ellipse,#863ded80 0%,#4932c255 34%,transparent 70%);animation:tech-violet 15s ease-in-out infinite alternate}
+.grid-bg{inset:25% -50% -65%;background-image:linear-gradient(#879dff20 1px,transparent 1px),linear-gradient(90deg,#8f98ff20 1px,transparent 1px);background-size:72px 72px;transform:perspective(550px) rotateX(58deg);transform-origin:center top;mask-image:linear-gradient(transparent,#0009 35%,#000 68%,transparent);animation:grid-travel 6s linear infinite}
+.tech-canvas{position:absolute;inset:0;width:100%;height:100%;opacity:.78}
+.light-ribbon{position:absolute;width:145vw;height:40vh;left:-25vw;border-radius:50%;border:1px solid transparent;border-top-color:#819eff77;box-shadow:0 -7px 24px -12px #659cff;filter:drop-shadow(0 0 12px #6b80f6);opacity:.65;transform:rotate(-21deg);pointer-events:none}
+.r1{top:23vh;animation:ribbon-flow 10s ease-in-out infinite alternate}
+.r2{top:58vh;border-top-color:#ae7fff88;box-shadow:0 -7px 24px -12px #af6aff;animation:ribbon-flow 13s ease-in-out infinite alternate-reverse}
+.stars{opacity:.7;animation:twinkle 4s ease-in-out infinite alternate}
+header{background:#080d20e8;border-bottom-color:#6379cc33}
+.hero-picks{background:linear-gradient(145deg,#172540ea,#12152eea);border-color:#7586c54d;box-shadow:0 20px 70px #0005,0 0 38px #6377ed15}
+.brand-card,.article-card,.topic-card,.collection-grid>a,.review-grid>a{backdrop-filter:blur(10px);background-color:#10192bdd}
+.panel,.brand-overview,.rank-row,.source-box{backdrop-filter:blur(10px);background-color:#10192bde}
+@keyframes tech-blue{from{transform:translate(-5vw,0) rotate(-12deg) scale(1)}to{transform:translate(-20vw,20vh) rotate(8deg) scale(1.25)}}
+@keyframes tech-violet{from{transform:translate(0,-8vh) scale(1)}to{transform:translate(35vw,8vh) scale(1.2)}}
+@keyframes ribbon-flow{from{transform:translate(-4vw,-5vh) rotate(-24deg);opacity:.4}to{transform:translate(12vw,10vh) rotate(-10deg);opacity:.9}}
+@keyframes grid-travel{to{background-position:0 72px,0 72px}}
+@media(max-width:700px){.aurora{filter:blur(32px)}.tech-canvas{opacity:.55}.light-ribbon{width:190vw;left:-45vw}.grid-bg{background-size:54px 54px}.brand-card,.article-card,.topic-card{backdrop-filter:none}}
+@media(prefers-reduced-motion:reduce){.ambient *{animation:none!important}}
+
+@media print{body{background:#fff;color:#111}}
