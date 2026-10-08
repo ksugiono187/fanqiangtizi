@@ -1,0 +1,14 @@
+{
+  "provider": "Cloudflare Pages",
+  "project": "fanqiangtizi",
+  "sourceRepository": "https://github.com/ksugiono187/fanqiangtizi",
+  "productionBranch": "main",
+  "buildCommand": "python tools/build.py && python tools/check.py",
+  "outputDirectory": "dist",
+  "url": "https://fanqiangtizi.pages.dev/",
+  "verifiedDate": "2026-10-08",
+  "status": "deployed",
+  "customDomain": "fanqiangtizi.wiki",
+  "customDomainStatus": "awaiting_explicit_dns_replacement_approval",
+  "deploymentId": "abe8a1e7-6274-4e3d-a783-d9de31cc1e7c"
+}
