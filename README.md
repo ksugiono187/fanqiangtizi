@@ -33,7 +33,9 @@ python -m http.server 4173 --directory dist
 
 ## 域名与发布
 
-仓库为 https://github.com/ksugiono187/fanqiangtizi 。已提供GitHub Pages自动发布工作流。仓库 Settings → Pages 的 Source 应选择 GitHub Actions，Custom domain 为 fanqiangtizi.wiki。
+仓库为 https://github.com/ksugiono187/fanqiangtizi 。推荐Cloudflare Pages连接该仓库托管，构建命令为 `python tools/build.py && python tools/check.py`，输出目录为 `dist`。自定义域名设置为fanqiangtizi.wiki。详见 `发布与维护说明.md`。
+
+同时保留GitHub Pages备选工作流：每次提交自动检查，手动运行才发布。选择这一方案时，仓库 Settings → Pages 的 Source 应选择 GitHub Actions，Custom domain 为 fanqiangtizi.wiki。
 
 在域名DNS管理中按GitHub官方说明配置域名，并等待HTTPS证书签发。详见 `发布与维护说明.md`。域名配置完成前，本地文件不能证明该域名已上线。
 

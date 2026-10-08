@@ -1,4 +1,4 @@
-name: Publish blog to GitHub Pages
+name: Validate blog and optionally publish to GitHub Pages
 on:
   push:
     branches: [main]
@@ -23,10 +23,13 @@ jobs:
       - name: Validate content and links
         run: python tools/check.py
       - uses: actions/configure-pages@v5
+        if: github.event_name == 'workflow_dispatch'
       - uses: actions/upload-pages-artifact@v4
+        if: github.event_name == 'workflow_dispatch'
         with:
           path: dist
   deploy:
+    if: github.event_name == 'workflow_dispatch'
     needs: build
     runs-on: ubuntu-latest
     environment:
