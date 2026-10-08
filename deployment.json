@@ -9,6 +9,6 @@
   "verifiedDate": "2026-10-08",
   "status": "deployed",
   "customDomain": "fanqiangtizi.wiki",
-  "customDomainStatus": "awaiting_explicit_dns_replacement_approval",
+  "customDomainStatus": "activated_and_https_homepage_verified",
   "deploymentId": "abe8a1e7-6274-4e3d-a783-d9de31cc1e7c"
 }
