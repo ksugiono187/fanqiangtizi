@@ -27,7 +27,7 @@ def price_info(b):
     return '待核对','当前套餐身份或状态','见原始资料说明'
 def facts(b):
     price,period,quota=price_info(b)
-    return '<div class="fact-grid">'+''.join(f'<div><span>{E(label)}</span><strong>{E(value)}</strong><small>{E(sub)}</small></div>' for label,value,sub in [('入门支出',price,period),('额度周期',quota,'按套餐分别标注'),('套餐记录',str(len(b['plans']))+' 项','历史价目与周期'),('优惠代码',b.get('coupon') or '未提供','适用范围以结算为准')])+'</div>'
+    return '<div class="fact-grid">'+''.join(f'<div><span>{E(label)}</span><strong>{E(value)}</strong><small>{E(sub)}</small></div>' for label,value,sub in [('月付费用参考',price,period),('额度周期',quota,'按套餐分别标注'),('套餐记录',str(len(b['plans']))+' 项','历史价目与周期'),('优惠代码',b.get('coupon') or '未提供','适用范围以结算为准')])+'</div>'
 def economics(b):
     ps=valid_months(b)
     if not ps:
@@ -203,11 +203,11 @@ def topic_intro(selected,mode):
     rows=[]
     for i,b in enumerate(selected,1):
         price,period,quota=price_info(b)
-        rows.append([f'{i:02} '+b['name'],price,quota,b['profile']['headline'],b['checkedAt']])
+        rows.append([f'{i:02} '+b['name'],price,quota,b['profile']['headline'],b.get('referencePriceDate',b['checkedAt'])])
     names={'recommended':('按指定推荐顺序，逐个比较套餐与使用条件','推荐顺序由站主指定。每个席位包含费用结构、适用需求与核对重点，读者可以依据自己的条件重新筛选。'), 'budget':('低月支出与低单位价，是两种比较','本专题按可确认月额度的历史最低月付金额排序。小额度档可能月费更低，大额度档可能单位价更低；实际需求决定应比较哪一档。'), 'stable':('候选目录与性能排名分开呈现','以下十个席位用于安排后续稳定性测试。缺少同条件连续样本，因此不提供星级、分数或稳定性高低结论。')}
     title,intro=names[mode]
     body='<section class="topic-brief"><span class="eyebrow">专题阅读说明</span><h2>'+title+'</h2>'+para(intro)+'<div class="topic-criteria">'+''.join('<div><strong>'+label+'</strong><p>'+text+'</p></div>' for label,text in [('01 / 先确认需求','预算、必要地区、设备和真实任务。'),('02 / 再统一口径','月付、年度与按量额度分别计算。'),('03 / 最后验证体验','以常用网络的任务样本确认可用性。')])+'</div></section>'
-    body+=table('十个候选快速对照：价格为有日期的参考记录',['席位与品牌','入门支出','额度说明','比较重点','资料核对'],rows)
+    body+=table('十个候选快速对照：价格为有日期的参考记录',['席位与品牌','月付费用参考','额度说明','比较重点','资料核对'],rows)
     body+=toc([('rank-'+str(i),f'{i:02} '+b['name']) for i,b in enumerate(selected,1)])
     return body
 def home_upgrade(body):

@@ -20,6 +20,10 @@ for rank,b in enumerate(brands,1):
     b['sourcePage']='https://jichangnetwork.blog/brands/'+old['id']+'/'
     b['order']=rank
     b['status']='资料待复核' if b['id'] in ['firefly','jilian'] else '运营状态待确认' if b['id']=='kosing' else '参考资料已收录'
+
+editorial_overrides=json.loads((ROOT/'data/editorial-overrides.json').read_text(encoding='utf-8'))
+for b in brands:
+    b['profile'].update(editorial_overrides.get(b['id'],{}))
 topics=list(csv.reader((ROOT/'data/topics.tsv').open(encoding='utf-8'),delimiter='\t'))
 assert len(topics)==121 and len(brands)==29
 (ROOT/'data/brand-catalog.json').write_text(json.dumps(brands,ensure_ascii=False,indent=2),encoding='utf-8')
