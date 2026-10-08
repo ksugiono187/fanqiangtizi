@@ -1,0 +1,1 @@
+{"name":"fanqiangtizi-wiki","version":"1.0.0","private":true,"scripts":{"build":"python tools/build.py","check":"python tools/check.py","preview":"python -m http.server 4173 --directory dist"}}

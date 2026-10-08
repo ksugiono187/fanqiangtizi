@@ -1,0 +1,19 @@
+{
+  "status": "pass",
+  "pages": 230,
+  "articles": 150,
+  "brands": 29,
+  "coupons": 11,
+  "sitemapUrls": 230,
+  "errors": [],
+  "checks": [
+    "全部内部链接与锚点",
+    "标题与描述唯一",
+    "逐页TDK与canonical",
+    "JSON-LD有效",
+    "XML sitemap与RSS有效",
+    "品牌顺序与原始入口一致",
+    "三榜各10个条目",
+    "实测缺失值保留为空"
+  ]
+}
