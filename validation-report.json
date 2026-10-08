@@ -1,10 +1,10 @@
 {
   "status": "pass",
-  "pages": 230,
+  "pages": 231,
   "articles": 150,
   "brands": 29,
   "coupons": 11,
-  "sitemapUrls": 230,
+  "sitemapUrls": 231,
   "errors": [],
   "checks": [
     "全部内部链接与锚点",
